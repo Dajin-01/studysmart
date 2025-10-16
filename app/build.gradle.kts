@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.smartstudyappproject1"
+    namespace = "com.example.studysmart"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.smartstudyappproject1"
+        applicationId = "com.example.studysmart"
         minSdk = 21
         targetSdk = 34
         versionCode = 1

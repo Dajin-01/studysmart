@@ -1,1 +1,1 @@
-@ Study Smart 
+# Study Smart 

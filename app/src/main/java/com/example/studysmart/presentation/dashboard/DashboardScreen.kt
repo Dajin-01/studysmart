@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.example.studysmart.domain.model.Subject
 import com.example.studysmart.presentation.components.CountCard
 import com.example.studysmart.presentation.components.SubjectCard
+import com.example.studysmart.presentation.components.tasksList
 import org.w3c.dom.Text
 
 @Composable
@@ -70,6 +72,23 @@ fun DashboardScreen() {
                     subjectList = subjects
                 )
             }
+
+            item {
+                Button(
+                    onClick = { /*TODO*/},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 48.dp, vertical = 20.dp)
+                ) {
+                    Text(text = "Start Study Session")
+                }
+            }
+            tasksList(
+                sectionTitle = "UPCOMING TASKS",
+                emptyListText = "You don't have any upcoming tasks. \n" +
+                            "Click the + button in subject screen to add new task.",
+                tasks = emptyList()
+            )
 
         }
     }

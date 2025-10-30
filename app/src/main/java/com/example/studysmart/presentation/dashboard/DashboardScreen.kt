@@ -1,6 +1,5 @@
 package com.example.studysmart.presentation.dashboard
 
-import android.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,6 +26,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,11 +37,16 @@ import androidx.compose.ui.unit.dp
 import com.example.studysmart.domain.model.Session
 import com.example.studysmart.domain.model.Subject
 import com.example.studysmart.domain.model.Task
+import com.example.studysmart.presentation.components.AddSubjectDialog
 import com.example.studysmart.presentation.components.CountCard
 import com.example.studysmart.presentation.components.SubjectCard
 import com.example.studysmart.presentation.components.studySessionsList
 import com.example.studysmart.presentation.components.tasksList
 import org.w3c.dom.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.example.studysmart.presentation.components.DeleteDialog
 
 @Composable
 fun DashboardScreen() {
@@ -128,6 +134,35 @@ fun DashboardScreen() {
         ),
     )
 
+    var isAddSubjectDialogOpen by rememberSaveable { mutableStateOf(false) }
+    var isDeleteSessionDialogOpen by rememberSaveable { mutableStateOf(false) }
+
+    var subjectName by remember {mutableStateOf("")}
+    var goalHours by remember {mutableStateOf("")}
+    var selectedColor by remember {mutableStateOf(Subject.subjectCardColors.random())}
+    AddSubjectDialog(
+        isOpen =isAddSubjectDialogOpen,
+        subjectName = subjectName,
+        goalHours = goalHours,
+        onSubjectNameChange = {subjectName = it},
+        onGoalHoursChange = {goalHours = it},
+        selectedColors = selectedColor,
+        onColorChange = {selectedColor = it},
+        onDismissRequest = {isAddSubjectDialogOpen = false},
+        onConfirmButtonClick = {
+            isAddSubjectDialogOpen = false
+        }
+    )
+
+    DeleteDialog(
+        isOpen = isDeleteSessionDialogOpen,
+        title = "Delete Session?",
+        bodyText = "Are you sure, you want to delete this session? Your studied hours will be reduced " +
+                "by this session time. This action can not be unde. ",
+        onDismissRequest = {isDeleteSessionDialogOpen},
+        onConfirmButtonClick = {isDeleteSessionDialogOpen}
+    )
+
     Scaffold(
         topBar = {DashboardScreenTopBar()}
     ) { paddingValues ->
@@ -147,7 +182,8 @@ fun DashboardScreen() {
             item {
                 SubjectCardsSection(
                     modifier = Modifier.fillMaxWidth(),
-                    subjectList = subjects
+                    subjectList = subjects,
+                    onAddIconClicked = { isAddSubjectDialogOpen = true }
                 )
             }
 
@@ -177,7 +213,7 @@ fun DashboardScreen() {
                 emptyListText = "You don't have any recent study sessions.\n" +
                         "Start a study session to begin recording your progress.",
                 sessions = sessions,
-                onDeleteIconClick = {}
+                onDeleteIconClick = {isDeleteSessionDialogOpen = true}
             )
 
         }
@@ -231,7 +267,8 @@ private fun CountCardsSection(
 private fun SubjectCardsSection(
     modifier: Modifier,
     subjectList: List<Subject>,
-    emptyListText: String = "You don't have any subjects.\n Click the + button to add new subjects"
+    emptyListText: String = "You don't have any subjects.\n Click the + button to add new subjects",
+    onAddIconClicked: () -> Unit
 ) {
     Column(modifier = modifier) {
         Row(
@@ -244,7 +281,7 @@ private fun SubjectCardsSection(
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(start = 12.dp)
             )
-            IconButton(onClick = {/*TODO*/}) {
+            IconButton(onClick = onAddIconClicked) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add Subject"

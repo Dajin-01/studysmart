@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.studysmart.R
 
 @Composable
 fun SubjectCard(
@@ -23,11 +24,11 @@ fun SubjectCard(
     subjectName: String,
     gradientColors: List<Color>,
     onClick: () -> Unit
-){
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(150.dp)
-            .clickable{onClick()}
+            .clickable { onClick() }
             .background(
                 brush = Brush.verticalGradient(gradientColors),
                 shape = MaterialTheme.shapes.medium
@@ -38,14 +39,15 @@ fun SubjectCard(
             verticalArrangement = Arrangement.Center
         ) {
             Image(
-                painter = painterResource(com.example.studysmart.R.drawable.img_books),
-                contentDescription = "",
+                painter = painterResource(R.drawable.img_books),
+                contentDescription = subjectName,
                 modifier = Modifier.size(80.dp)
             )
             Text(
                 text = subjectName,
                 style = MaterialTheme.typography.headlineMedium,
-                color = Color.White
+                color = Color.White,
+                maxLines = 1
             )
         }
     }

@@ -50,12 +50,23 @@ import com.example.studysmart.presentation.components.TaskDatePicker
 import com.example.studysmart.subjects
 import com.example.studysmart.util.Priority
 import com.example.studysmart.util.changeMillisToDateString
+import com.ramcosta.composedestinations.annotation.Destination
 import kotlinx.coroutines.launch
 import java.time.Instant
 
+data class TaskScreenNavArgs(
+    val taskId: Int?,
+    val subjectId: Int?
+)
+
+@Destination(navArgsDelegate = TaskScreenNavArgs::class)
+@Composable
+fun TaskScreenRoute() {
+    TaskScreen()
+}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskScreen() {
+private fun TaskScreen() {
     var isDeleteDialogOpen by rememberSaveable {mutableStateOf(false)}
 
     var isDatePickerDialogOpen by rememberSaveable {mutableStateOf(false)}

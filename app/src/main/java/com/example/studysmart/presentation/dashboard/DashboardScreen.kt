@@ -50,9 +50,16 @@ import com.example.studysmart.presentation.components.DeleteDialog
 import com.example.studysmart.sessions
 import com.example.studysmart.subjects
 import com.example.studysmart.tasks
+import com.ramcosta.composedestinations.annotation.Destination
+
+@Destination(start = true)
+@Composable
+fun DashboardRoute() {
+    DashboardScreen()
+}
 
 @Composable
-fun DashboardScreen() {
+private fun DashboardScreen() {
 
 
     var isAddSubjectDialogOpen by rememberSaveable { mutableStateOf(false) }

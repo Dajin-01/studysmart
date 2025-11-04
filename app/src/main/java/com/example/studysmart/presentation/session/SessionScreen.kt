@@ -40,11 +40,18 @@ import com.example.studysmart.presentation.components.SubjectListBottomSheet
 import com.example.studysmart.presentation.components.studySessionsList
 import com.example.studysmart.sessions
 import com.example.studysmart.subjects
+import com.ramcosta.composedestinations.annotation.Destination
 import kotlinx.coroutines.launch
+
+@Destination
+@Composable
+fun SessionScreenRoute() {
+    SessionScreen()
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SessionScreen() {
+private fun SessionScreen() {
 
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()

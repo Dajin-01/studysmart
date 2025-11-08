@@ -15,9 +15,9 @@ import com.example.studysmart.domain.model.Task
 @TypeConverters(ColorListConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 
-    abstract fun SubjectDao(): SubjectDao
+    abstract fun subjectDao(): SubjectDao
 
     abstract fun taskDao(): TaskDao
 
-    abstract fun SessionDao(): SessionDao
+    abstract fun sessionDao(): SessionDao
 }

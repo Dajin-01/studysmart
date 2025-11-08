@@ -46,6 +46,7 @@ import org.w3c.dom.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.Navigator
 import com.example.studysmart.presentation.components.DeleteDialog
 import com.example.studysmart.presentation.destinations.SessionScreenRouteDestination
@@ -65,6 +66,9 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun DashboardScreenRoute(
     navigator: DestinationsNavigator
 ) {
+
+    val viewModel: DashboardViewModel = hiltViewModel()
+
     DashboardScreen(
         onSubjectCardClick = {subjectId ->
             subjectId?.let {

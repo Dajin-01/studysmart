@@ -44,6 +44,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.navigation.Navigator
 import com.example.studysmart.presentation.components.DeleteDialog
 import com.example.studysmart.presentation.components.SubjectListBottomSheet
 import com.example.studysmart.presentation.components.TaskDatePicker
@@ -51,6 +52,7 @@ import com.example.studysmart.subjects
 import com.example.studysmart.util.Priority
 import com.example.studysmart.util.changeMillisToDateString
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 import java.time.Instant
 
@@ -61,12 +63,18 @@ data class TaskScreenNavArgs(
 
 @Destination(navArgsDelegate = TaskScreenNavArgs::class)
 @Composable
-fun TaskScreenRoute() {
-    TaskScreen()
+fun TaskScreenRoute(
+    navigator: DestinationsNavigator
+) {
+    TaskScreen(
+        onBackButtonClick = {navigator.navigateUp()}
+    )
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TaskScreen() {
+private fun TaskScreen(
+    onBackButtonClick: () -> Unit
+) {
     var isDeleteDialogOpen by rememberSaveable {mutableStateOf(false)}
 
     var isDatePickerDialogOpen by rememberSaveable {mutableStateOf(false)}
@@ -127,7 +135,7 @@ private fun TaskScreen() {
                 isTaskExit = true,
                 isComplete = false,
                 checkBoxBorderColor = Red,
-                onBackButtonClick = {},
+                onBackButtonClick = onBackButtonClick,
                 onDeleteButtonClick = {isDeleteDialogOpen = true},
                 onCheckBoxClick = {}
             )

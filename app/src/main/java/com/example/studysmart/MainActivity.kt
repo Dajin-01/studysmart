@@ -6,10 +6,11 @@ import androidx.activity.compose.setContent
 import com.example.studysmart.domain.model.Session
 import com.example.studysmart.domain.model.Subject
 import com.example.studysmart.domain.model.Task
-import com.example.studysmart.presentation.NavGraph
 import com.example.studysmart.presentation.NavGraphs
+
 import com.example.studysmart.presentation.theme.StudySmartTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -41,17 +41,24 @@ import com.example.studysmart.presentation.components.studySessionsList
 import com.example.studysmart.sessions
 import com.example.studysmart.subjects
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 
 @Destination
 @Composable
-fun SessionScreenRoute() {
-    SessionScreen()
+fun SessionScreenRoute(
+    navigator: DestinationsNavigator
+) {
+    SessionScreen(
+        onBackButtonClick = {navigator.navigateUp()}
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SessionScreen() {
+private fun SessionScreen(
+    onBackButtonClick: () -> Unit
+) {
 
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
@@ -85,7 +92,7 @@ private fun SessionScreen() {
 
     Scaffold (
         topBar = {
-            SessionScreenTopBar(onBackButtonClick = {})
+            SessionScreenTopBar(onBackButtonClick = onBackButtonClick)
         }
     ) {paddingValues ->
         LazyColumn(

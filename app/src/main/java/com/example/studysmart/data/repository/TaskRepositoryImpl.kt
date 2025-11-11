@@ -4,6 +4,7 @@ import com.example.studysmart.data.local.TaskDao
 import com.example.studysmart.domain.model.Task
 import com.example.studysmart.domain.repository.TaskRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class TaskRepositoryImpl @Inject constructor(
@@ -22,14 +23,24 @@ class TaskRepositoryImpl @Inject constructor(
     }
 
     override fun getUpComingTasksForSubject(subjectInt: Int): Flow<List<Task>> {
-        TODO("Not yet implemented")
+        return taskDao.getTasksForSubject(subjectInt)
+            .map {tasks -> tasks.filter { it.isComplete.not() }}
+            .map {tasks -> sortTasks(tasks)}
     }
 
     override fun getCompletedTasksForSubject(subjectInt: Int): Flow<List<Task>> {
-        TODO("Not yet implemented")
+        return taskDao.getTasksForSubject(subjectInt)
+            .map {tasks -> tasks.filter { it.isComplete}}
+            .map {tasks -> sortTasks(tasks)}
     }
 
     override fun getAllUpComingTasks(): Flow<List<Task>> {
-        TODO("Not yet implemented")
+        return taskDao.getAllTasks()
+            .map {tasks -> tasks.filter {it.isComplete.not()}}
+            .map {tasks -> sortTasks(tasks)}
+    }
+
+    private fun sortTasks(tasks: List<Task>): List<Task> {
+        return tasks.sortedWith(compareBy<Task> {it.dueDate}.thenByDescending { it.priority })
     }
 }

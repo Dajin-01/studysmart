@@ -12,7 +12,7 @@ interface TaskDao {
     @Upsert
     suspend fun upsertTask(task: Task)
 
-    @Query("DELETE FROM Task WHERE taskId = :taskId?")
+    @Query("DELETE FROM Task WHERE taskId = :taskId")
     suspend fun deleteTask(taskId: Int)
 
         @Query("DELETE FROM Task WHERE taskSubjectId = :subjectId")

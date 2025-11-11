@@ -24,8 +24,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.studysmart.R
 import com.example.studysmart.domain.model.Task
 import com.example.studysmart.util.Priority
+import com.example.studysmart.util.changeMillisToDateString
 
 fun LazyListScope.tasksList(
     sectionTitle: String,
@@ -34,7 +36,7 @@ fun LazyListScope.tasksList(
     onTaskCardClick: (Int?) -> Unit,
     onCheckBoxClick: (Task) -> Unit
 ) {
-    item{
+    item {
         Text(
             text = sectionTitle,
             style = MaterialTheme.typography.bodySmall,
@@ -43,32 +45,31 @@ fun LazyListScope.tasksList(
     }
     if (tasks.isEmpty()) {
         item {
-            Column (
+            Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-            Image(
-                modifier = Modifier.size(120.dp),
-                painter = painterResource(com.example.studysmart.R.drawable.img_tasks),
-                contentDescription = emptyListText
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = emptyListText,
-                style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray,
-                textAlign = TextAlign.Center
-            )
+                Image(
+                    modifier = Modifier.size(120.dp),
+                    painter = painterResource(R.drawable.img_tasks),
+                    contentDescription = emptyListText
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = emptyListText,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.Gray,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
-    }
-    items(tasks) {task ->
+    items(tasks) { task ->
         TaskCard(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
             task = task,
-            onCheckBoxClick = {onCheckBoxClick(task)},
-            onClick = {onTaskCardClick(task.taskId)}
+            onCheckBoxClick = { onCheckBoxClick(task) },
+            onClick = { onTaskCardClick(task.taskId) }
         )
     }
 }
@@ -81,7 +82,7 @@ private fun TaskCard(
     onClick: () -> Unit
 ) {
     ElevatedCard(
-        modifier = modifier.clickable{ }
+        modifier = modifier.clickable { onClick() }
     ) {
         Row(
             modifier = Modifier
@@ -91,8 +92,8 @@ private fun TaskCard(
         ) {
             TaskCheckBox(
                 isComplete = task.isComplete,
-            borderColor = Priority.fromInt(task.priority).color,
-                onCheckBoxClick = {}
+                borderColor = Priority.fromInt(task.priority).color,
+                onCheckBoxClick = onCheckBoxClick
             )
             Spacer(modifier = Modifier.width(10.dp))
             Column {
@@ -107,7 +108,7 @@ private fun TaskCard(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "${task.dueDate}",
+                    text = task.dueDate.changeMillisToDateString(),
                     style = MaterialTheme.typography.bodySmall
                 )
             }

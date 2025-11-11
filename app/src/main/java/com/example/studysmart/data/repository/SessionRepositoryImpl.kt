@@ -15,11 +15,11 @@ class SessionRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteSession(session: Session) {
-        TODO("Not yet implemented")
+        sessionDao.deleteSession(session)
     }
 
     override fun getAllSessions(): Flow<List<Session>> {
-        return sessionDao.getAllSessions().take(count = 5)
+        return sessionDao.getAllSessions()
     }
 
     override fun getRecentFiveSessions(): Flow<List<Session>> {

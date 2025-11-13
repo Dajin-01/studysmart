@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import com.example.studysmart.domain.model.Session
 import com.example.studysmart.domain.model.Task
 import com.example.studysmart.util.Priority
+import com.example.studysmart.util.changeMillisToDateString
+import com.example.studysmart.util.toHours
 
 fun LazyListScope.studySessionsList(
     sectionTitle: String,
@@ -101,13 +103,13 @@ private fun StudySessionCard(
                     style = MaterialTheme.typography.titleMedium,
                 )
                 Text(
-                    text = "${session.date}",
+                    text = session.date.changeMillisToDateString(),
                     style = MaterialTheme.typography.bodySmall
                 )
             }
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = "${session.duration} hr",
+                    text = "${session.duration.toHours()} hr",
                     style = MaterialTheme.typography.titleMedium
                 )
                 IconButton(onClick = onDeleteIconClick) {

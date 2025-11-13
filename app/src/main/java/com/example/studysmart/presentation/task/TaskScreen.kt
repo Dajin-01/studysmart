@@ -53,7 +53,6 @@ import androidx.navigation.Navigator
 import com.example.studysmart.presentation.components.DeleteDialog
 import com.example.studysmart.presentation.components.SubjectListBottomSheet
 import com.example.studysmart.presentation.components.TaskDatePicker
-import com.example.studysmart.subjects
 import com.example.studysmart.util.Priority
 import com.example.studysmart.util.SnackbarEvent
 import com.example.studysmart.util.changeMillisToDateString

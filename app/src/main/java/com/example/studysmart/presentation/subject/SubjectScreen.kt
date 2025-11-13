@@ -53,8 +53,6 @@ import com.example.studysmart.presentation.components.studySessionsList
 import com.example.studysmart.presentation.components.tasksList
 import com.example.studysmart.presentation.destinations.TaskScreenRouteDestination
 import com.example.studysmart.presentation.task.TaskScreenNavArgs
-import com.example.studysmart.sessions
-import com.example.studysmart.tasks
 import com.example.studysmart.util.SnackbarEvent
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator

@@ -36,6 +36,9 @@ StudySmart helps students organize their subjects, manage tasks, track study ses
 ---
 
 ### Key features Screen shots
+<img width="271" height="585" alt="스크린샷 2025-11-13 오후 8 20 55" src="https://github.com/user-attachments/assets/8affc9ef-e902-42d4-a29d-ec5f05603eca" /><img width="271" height="585" alt="스크린샷 2025-11-13 오후 8 21 06" src="https://github.com/user-attachments/assets/b8a328e6-3c04-4c95-b01a-999281edcbf4" /><img width="271" height="585" alt="스크린샷 2025-11-13 오후 8 21 14" src="https://github.com/user-attachments/assets/86efb809-0376-490d-859a-0c17b755be51" />
+
+
 
 
 ## 🏛 Architecture Overview

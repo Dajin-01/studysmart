@@ -158,58 +158,80 @@ private fun DashboardScreen(
     )
 
     Scaffold(
-        snackbarHost = {SnackbarHost(hostState = snackbarHostState)},
-        topBar = {DashboardScreenTopBar()}
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        topBar = { DashboardScreenTopBar() }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
+            // 1) 상단 인사 + 요약
             item {
-                CountCardsSection(
+                GreetingSection(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(12.dp),
-                    subjectCount = state.totalSubjectCount,
-                    studiedHours = state.totalStudiedHours.toString(),
-                    goalHours = state.totalGoalStudyHours.toString()
+                        .padding(horizontal = 20.dp, vertical = 16.dp),
+                    studiedHours = state.totalStudiedHours.toString()
                 )
             }
+
+            // 2) 카드형 Start Study Session
+            item {
+                StartSessionCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    onClick = onStartSessionButtonClick
+                )
+            }
+
+            // 3) Subjects 섹션
             item {
                 SubjectCardsSection(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
                     subjectList = state.subjects,
                     onAddIconClicked = { isAddSubjectDialogOpen = true },
                     onSubjectCardClick = onSubjectCardClick
                 )
             }
 
-            item {
-                Button(
-                    onClick = onStartSessionButtonClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 48.dp, vertical = 20.dp)
-                ) {
-                    Text(text = "Start Study Session")
-                }
-            }
+            // 4) Tasks 리스트
             tasksList(
-                sectionTitle = "UPCOMING TASKS",
-                emptyListText = "You don't have any upcoming tasks. \n" +
-                            "Click the + button in subject screen to add new task.",
+                sectionTitle = "NEXT TASKS",
+                emptyListText = "You don't have any upcoming tasks.\n" +
+                        "Add tasks from a subject to see them here.",
                 tasks = tasks,
                 onCheckBoxClick = { onEvent(DashboardEvent.OnTaskIsCompleteChange(it)) },
                 onTaskCardClick = onTaskCardClick
             )
-            item{
-                Spacer(modifier = Modifier.height(20.dp))
+
+            // 5) Quick stats (카드 3개) - 아래로 내림
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "QUICK STATS",
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                )
+                CountCardsSection(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    subjectCount = state.totalSubjectCount,
+                    studiedHours = state.totalStudiedHours.toString(),
+                    goalHours = state.totalGoalStudyHours.toString()
+                )
             }
+
+            // 6) Recent sessions
             studySessionsList(
                 sectionTitle = "RECENT STUDY SESSIONS",
-                emptyListText = "You don't have any recent study sessions.\n" +
-                        "Start a study session to begin recording your progress.",
+                emptyListText = "No sessions yet.\nStart a study session to begin tracking.",
                 sessions = recentSessions,
                 onDeleteIconClick = {
                     onEvent(DashboardEvent.OnDeleteSessionButtonClick(it))
@@ -218,6 +240,7 @@ private fun DashboardScreen(
             )
         }
     }
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -226,12 +249,69 @@ private fun DashboardScreenTopBar() {
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = "StudySmart",
+                text = "StudyManagement",
                 style = MaterialTheme.typography.headlineMedium
             )
         }
     )
 }
+
+@Composable
+private fun GreetingSection(
+    modifier: Modifier = Modifier,
+    studiedHours: String
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = "Hi, Dajin 👋",
+            style = MaterialTheme.typography.titleMedium
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = "You've studied $studiedHours hrs in total.",
+            style = MaterialTheme.typography.bodySmall,
+            color = Color.Gray
+        )
+    }
+}
+
+@Composable
+private fun StartSessionCard(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    androidx.compose.material3.Card(
+        modifier = modifier,
+        shape = MaterialTheme.shapes.large
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Ready to focus?",
+                style = MaterialTheme.typography.titleMedium
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Start a study session and I’ll track your time.",
+                style = MaterialTheme.typography.bodySmall,
+                color = Color.Gray,
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Button(
+                onClick = onClick,
+                modifier = Modifier.fillMaxWidth(0.8f)
+            ) {
+                Text(text = "Start Study Session")
+            }
+        }
+    }
+}
+
 
 
 
@@ -294,7 +374,7 @@ private fun SubjectCardsSection(
                 modifier = Modifier
                     .size(120.dp)
                     .align(Alignment.CenterHorizontally),
-                painter = painterResource(com.example.studysmart.R.drawable.img_books),
+                painter = painterResource(com.example.studysmart.R.drawable.img_book),
                 contentDescription = emptyListText
             )
             Text(

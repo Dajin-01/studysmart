@@ -56,7 +56,7 @@ fun LazyListScope.studySessionsList(
             ) {
                 Image(
                     modifier = Modifier.size(120.dp),
-                    painter = painterResource(com.example.studysmart.R.drawable.img_lamp),
+                    painter = painterResource(com.example.studysmart.R.drawable.img_lamp_1),
                     contentDescription = emptyListText
                 )
                 Spacer(modifier = Modifier.height(12.dp))

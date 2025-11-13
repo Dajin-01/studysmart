@@ -51,7 +51,7 @@ fun LazyListScope.tasksList(
             ) {
                 Image(
                     modifier = Modifier.size(120.dp),
-                    painter = painterResource(R.drawable.img_tasks),
+                    painter = painterResource(R.drawable.img_task_1),
                     contentDescription = emptyListText
                 )
                 Spacer(modifier = Modifier.height(12.dp))
